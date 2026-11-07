@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>El Patron — барбершоп в Астане</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#141414; --surface:#1d1d1d; --line:#2f2f2f;
+  --text:#ece7df; --muted:#a39d93; --accent:#c9a46a; --accent-text:#141414;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+h1,h2,h3{font-family:"Oswald","Arial Narrow",Impact,sans-serif;text-transform:uppercase;letter-spacing:.04em;margin:0;font-weight:700}
+a{color:inherit}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+section{padding:64px 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(28px,6vw,40px);margin-bottom:28px}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-text);font:700 16px/1 "Oswald",Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:0;border-radius:4px;padding:16px 32px;min-height:48px;cursor:pointer}
+.btn:active{opacity:.85}
+.btn.ghost{background:none;color:var(--text);border:1px solid var(--line)}
+
+/* hero */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;border-top:0;padding:32px 0}
+.brand{font:700 15px "Oswald",Arial,sans-serif;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:24px}
+.hero h1{font-size:clamp(44px,13vw,104px);line-height:.98;margin-bottom:20px}
+.hero p{color:var(--muted);max-width:30em;font-size:18px;margin:0 0 32px}
+.hero .meta{margin-top:40px;color:var(--muted);font-size:14px}
+
+/* services */
+.list{list-style:none;margin:0;padding:0}
+.list li{display:flex;align-items:baseline;gap:12px;padding:18px 0;border-bottom:1px solid var(--line)}
+.list .name{font:500 20px "Oswald",Arial,sans-serif;text-transform:uppercase;letter-spacing:.05em}
+.list .dots{flex:1;border-bottom:1px dotted var(--muted);transform:translateY(-4px);min-width:12px}
+.list .price{font:700 20px "Oswald",Arial,sans-serif;white-space:nowrap;color:var(--accent)}
+.list small{display:block;color:var(--muted);font:14px system-ui,sans-serif;text-transform:none;letter-spacing:0;margin-top:2px}
+
+/* masters */
+.masters{display:grid;gap:20px;grid-template-columns:1fr 1fr}
+.master{background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.ph{aspect-ratio:4/5;background:#262626;display:flex;align-items:flex-end;justify-content:center}
+.ph svg{width:70%;height:auto;color:#3a3a3a}
+.master .info{padding:16px}
+.master h3{font-size:20px}
+.master p{margin:4px 0 0;color:var(--muted);font-size:14px}
+
+/* form */
+form{display:grid;gap:16px;max-width:520px}
+label{display:grid;gap:6px;font-size:14px;color:var(--muted)}
+input,select{width:100%;min-height:48px;padding:12px 14px;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:4px;font:16px system-ui,sans-serif}
+input:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px}
+.row{display:grid;gap:16px;grid-template-columns:1fr 1fr}
+.ok{display:none;max-width:520px;background:var(--surface);border:1px solid var(--accent);border-radius:6px;padding:24px}
+.ok h3{color:var(--accent);margin-bottom:8px}
+.ok p{margin:0 0 16px;color:var(--muted)}
+.err{color:#e08a7a;font-size:14px;min-height:1.2em;margin:0}
+
+/* contacts */
+.contacts{display:grid;gap:28px}
+.contacts dl{margin:0}
+.contacts dt{color:var(--muted);font-size:14px;margin-top:16px}
+.contacts dt:first-child{margin-top:0}
+.contacts dd{margin:2px 0 0;font-size:18px}
+.map{border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--surface)}
+.map svg{display:block;width:100%;height:auto}
+.map a{display:block;padding:14px 16px;text-align:center;border-top:1px solid var(--line);text-decoration:none;font-weight:600}
+footer{padding:28px 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px;text-align:center}
+
+@media(min-width:760px){
+  section{padding:96px 0}
+  .contacts{grid-template-columns:1fr 1.3fr;align-items:start}
+  .masters{gap:32px}
+}
+@media(max-width:380px){.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brand">El Patron · Астана</div>
+    <h1>Стрижка.<br>Борода.<br>Порядок.</h1>
+    <p>Мужской барбершоп без суеты: точная работа, честная цена и мастера, которые слушают.</p>
+    <a class="btn" href="#booking">Записаться</a>
+    <div class="meta">Ежедневно 10:00–21:00</div>
+  </div>
+</header>
+
+<section id="services">
+  <div class="wrap">
+    <h2>Услуги и цены</h2>
+    <ul class="list">
+      <li><span class="name">Стрижка<small>Мытьё головы и укладка</small></span><span class="dots"></span><span class="price">4 500 ₸</span></li>
+      <li><span class="name">Борода<small>Моделирование и уход</small></span><span class="dots"></span><span class="price">2 500 ₸</span></li>
+      <li><span class="name">Комплекс<small>Стрижка и борода со скидкой</small></span><span class="dots"></span><span class="price">5 500 ₸</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="masters">
+  <div class="wrap">
+    <h2>Мастера</h2>
+    <div class="masters">
+      <article class="master">
+        <div class="ph" role="img" aria-label="Фото мастера Армана (заглушка)">
+          <svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><circle cx="50" cy="34" r="18"/><path d="M12 100c0-24 17-38 38-38s38 14 38 38z"/></svg>
+        </div>
+        <div class="info"><h3>Арман</h3><p>Барбер, 8 лет опыта</p></div>
+      </article>
+      <article class="master">
+        <div class="ph" role="img" aria-label="Фото мастера Данияра (заглушка)">
+          <svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><circle cx="50" cy="34" r="18"/><path d="M12 100c0-24 17-38 38-38s38 14 38 38z"/></svg>
+        </div>
+        <div class="info"><h3>Данияр</h3><p>Барбер, 5 лет опыта</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="booking">
+  <div class="wrap">
+    <h2>Запись</h2>
+    <form id="form" novalidate>
+      <label>Имя
+        <input name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться" required>
+      </label>
+      <label>Телефон
+        <input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 700 000 00 00" required>
+      </label>
+      <label>Услуга
+        <select name="service" required>
+          <option>Стрижка — 4 500 ₸</option>
+          <option>Борода — 2 500 ₸</option>
+          <option>Комплекс — 5 500 ₸</option>
+        </select>
+      </label>
+      <div class="row">
+        <label>Дата
+          <input name="date" type="date" required>
+        </label>
+        <label>Время
+          <select name="time" required></select>
+        </label>
+      </div>
+      <p class="err" id="err" role="alert"></p>
+      <button class="btn" type="submit">Записаться</button>
+    </form>
+
+    <div class="ok" id="ok" role="status">
+      <h3>Заявка принята</h3>
+      <p id="okText"></p>
+      <a class="btn" id="wa" href="#" target="_blank" rel="noopener">Подтвердить в WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<section id="contacts">
+  <div class="wrap">
+    <h2>Как нас найти</h2>
+    <div class="contacts">
+      <dl>
+        <dt>Адрес</dt><dd>г. Астана, пр. Мангилик Ел, 00</dd>
+        <dt>Часы работы</dt><dd>Ежедневно, 10:00–21:00</dd>
+        <dt>Телефон</dt><dd><a href="tel:+77000000000">+7 700 000 00 00</a></dd>
+      </dl>
+      <div class="map">
+        <svg viewBox="0 0 400 260" role="img" aria-label="Схема расположения барбершопа">
+          <rect width="400" height="260" fill="#1f1f1f"/>
+          <g stroke="#333" stroke-width="14" fill="none">
+            <path d="M0 90H400M0 190H400M110 0V260M290 0V260"/>
+          </g>
+          <g stroke="#3d3d3d" stroke-width="3" fill="none" stroke-dasharray="10 10">
+            <path d="M0 90H400M0 190H400M110 0V260M290 0V260"/>
+          </g>
+          <rect x="130" y="108" width="140" height="64" fill="#262626"/>
+          <rect x="20" y="20" width="70" height="52" fill="#262626"/>
+          <rect x="310" y="20" width="70" height="52" fill="#262626"/>
+          <rect x="20" y="208" width="70" height="40" fill="#262626"/>
+          <rect x="310" y="208" width="70" height="40" fill="#262626"/>
+          <path d="M200 156c-18-26-26-36-26-48a26 26 0 1 1 52 0c0 12-8 22-26 48z" fill="#c9a46a"/>
+          <circle cx="200" cy="108" r="9" fill="#141414"/>
+        </svg>
+        <a href="https://2gis.kz/astana/search/El%20Patron%20barbershop" target="_blank" rel="noopener">Открыть в 2ГИС</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© El Patron, Астана</footer>
+
+<script>
+(function(){
+  var WA = "77000000000"; // замените на номер WhatsApp барбершопа
+  var form = document.getElementById("form");
+  var sel = form.elements.time;
+  for (var h = 10; h < 21; h++) {
+    ["00","30"].forEach(function(m){
+      var o = document.createElement("option");
+      o.textContent = (h < 10 ? "0" : "") + h + ":" + m;
+      sel.appendChild(o);
+    });
+  }
+  var d = form.elements.date, t = new Date();
+  var iso = t.getFullYear() + "-" + String(t.getMonth()+1).padStart(2,"0") + "-" + String(t.getDate()).padStart(2,"0");
+  d.min = iso; d.value = iso;
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var f = form.elements, err = document.getElementById("err");
+    var name = f.name.value.trim(), phone = f.phone.value.trim();
+    if (name.length < 2) { err.textContent = "Укажите имя."; f.name.focus(); return; }
+    if (phone.replace(/\D/g,"").length < 10) { err.textContent = "Проверьте номер телефона."; f.phone.focus(); return; }
+    if (!f.date.value) { err.textContent = "Выберите дату."; f.date.focus(); return; }
+    err.textContent = "";
+    var parts = f.date.value.split("-");
+    var dateRu = parts[2] + "." + parts[1] + "." + parts[0];
+    var text = "Здравствуйте! Меня зовут " + name + ". Хочу записаться: " + f.service.value + ", " + dateRu + " в " + f.time.value + ". Телефон: " + phone + ".";
+    document.getElementById("okText").textContent = name + ", мы ждём вас " + dateRu + " в " + f.time.value + ". Услуга: " + f.service.value + ".";
+    document.getElementById("wa").href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(text);
+    form.style.display = "none";
+    var ok = document.getElementById("ok");
+    ok.style.display = "block";
+    ok.scrollIntoView({behavior:"smooth", block:"center"});
+  });
+})();
+</script>
+</body>
+</html>
